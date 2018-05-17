@@ -5,7 +5,7 @@ cd test
 # We pull the latest images
 docker-compose pull
 
-# We start the eAE environment in detached mode
+# We start the OPAL environment in detached mode
 docker-compose up -d
 
 cd ..

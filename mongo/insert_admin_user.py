@@ -17,6 +17,6 @@ adminUser = { "type" : "ADMIN",
               "created" : datetime.datetime.utcnow() 
              }
 
-client.eae.eae_users.insert_one(adminUser)
+client.opal.eae_users.insert_one(adminUser)
 
 client.close()

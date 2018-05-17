@@ -1,6 +1,6 @@
 
 module.exports = {
-    mongoURL: 'mongodb://mongodb/eae',
+    mongoURL: 'mongodb://mongodb/opal',
     port: 80,
     enableCors: true,
     jobsExpiredStatusTime: 720 , // Time in hours: 24h * 30d. Jobs to be archived
