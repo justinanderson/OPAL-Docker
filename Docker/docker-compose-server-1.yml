@@ -11,7 +11,7 @@ services:
             - 27017:27017
 
     mongodb-initialize:
-        image: aoehmich/eae-mongodb-initialize:latest
+        image: opalservices/opal-mongodb-initialize:latest
         depends_on:
           - mongodb
         links:

@@ -10,7 +10,7 @@ You can test locally a small deployment of the OPAL platform (1 Interface, 1 Cac
 to facilitate the process three bash scripts have been developed: 
   * `build.sh` : Copies the sample config to the Docker folder and pulls the latest version of all the necessary Docker images from DockerHub.
   * `start.sh` : Starts the cluster.
-  * `clean.sh` : Removes all containers used by the eAE compose. **NB**: The other containers and the eAE container images will not be deleted. 
-  * `test.sh` : Runs a small end to end test against the sandbox environment to check if the eAE running from docker-compose runs properly.
+  * `clean.sh` : Removes all containers used by the OPAL compose. **NB**: The other containers and the OPAL container images will not be deleted. 
+  * `test.sh` : Runs a small end to end test against the sandbox environment to check if the OPAL running from docker-compose runs properly.
 
 Please be aware that the interface will start on port `80`, the database on port `5432` and mongo on `27017`. Thus, before starting the sandbox please make sure that those three ports are available.
