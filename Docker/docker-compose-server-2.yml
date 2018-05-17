@@ -1,46 +1,53 @@
 version: '3'
 services:
-  timescaledb:
-    image: timescale/timescaledb:latest
-    ports:
-      - "5432:5432"
-    volumes:
-      - /mnt/db/pgdata:/var/lib/postgresql/data
-  timescaledb-initialize:
-    image: opalservices/timescaledb-initialize
-    depends_on:
-      - timescaledb
-    links:
-      - timescaledb
-  algoservice:
-    image: opalservices/opal-algoservice:latest
-    ports:
-      - "3001:80"
-    command:
-      - npm start
-  aggandprivacy:
-    image: opalservices/opal-privacy
-    ports:
-      - "9001:80"
-    command:
-      - npm start
-  compute:
-    image: opalservices/opal-compute:latest
-    depends_on:
-      - algoservice
-      - aggandprivacy
-    links:
-      - algoservice
-      - aggandprivacy
-    command:
-      - apparmor_init && npm start
-    ports:
-      - "8001:80"
-  scheduler:
-    image: opalservices/opal-scheduler
-    depends_on:
-      - compute
-    links:
-      - compute
-    ports:
-      - "80:80"
+    timescaledb:
+        image: timescale/timescaledb:latest
+        ports:
+            - "5432:5432"
+        volumes:
+            - /mnt/db/pgdata:/var/lib/postgresql/data
+
+    timescaledb-initialize:
+        build:
+            context: ..
+            dockerfile: ./timescaledb/Dockerfile
+        depends_on:
+            - timescaledb
+        links:
+            - timescaledb
+
+    algoservice:
+        image: opalservices/opal-algoservice:latest
+        ports:
+            - "3001:80"
+        command:
+            - npm start
+
+    aggandprivacy:
+        image: opalservices/opal-privacy
+        ports:
+            - "9001:80"
+        command:
+            - npm start
+
+    compute:
+        image: opalservices/opal-compute:latest
+        depends_on:
+            - algoservice
+            - aggandprivacy
+        links:
+            - algoservice
+            - aggandprivacy
+        command:
+            - apparmor_init && npm start
+        ports:
+            - "8001:80"
+
+    scheduler:
+        image: opalservices/opal-scheduler
+        depends_on:
+            - compute
+        links:
+            - compute
+        ports:
+            - "80:80"
