@@ -22,6 +22,8 @@ services:
             - "3001:80"
         command:
             - npm start
+        volumes:
+            - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
 
     aggandprivacy:
         image: opalservices/opal-privacy
@@ -29,6 +31,8 @@ services:
             - "9001:80"
         command:
             - npm start
+        volumes:
+            - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
         image: opalservices/opal-compute:latest
@@ -42,6 +46,8 @@ services:
             - apparmor_init && npm start
         ports:
             - "8001:80"
+        volumes:
+            - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
 
     scheduler:
         image: opalservices/opal-scheduler
@@ -51,3 +57,5 @@ services:
             - compute
         ports:
             - "80:80"
+        volumes:
+            - ./opal.scheduler.config.js:/usr/app/config/opal.scheduler.config.js
