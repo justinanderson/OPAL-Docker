@@ -1,9 +1,9 @@
 module.exports = {
-    mongoURL: 'mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]',
+    mongoURL: 'mongodb://localhost/opal',
     port: 8080,
     enableCors: true,
     cacheURL: 'http://cache:8080',
-    algoServiceURL: 'http://algoService:80',
+    algoServiceURL: 'http://algoService:3001',
     algorithmsDirectory: 'algorithms',
     auditDirectory: 'audit'
 };

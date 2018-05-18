@@ -4,6 +4,8 @@ cp ./Docker/daemon.json /etc/docker/daemon.json
 service docker restart
 rm -rf Docker/*.config.js
 
+echo -e "Copying all config files to Docker folder for docker-compose\n"
+
 for file in config/*.sample.config.js; do
     newName=`echo $file | sed s/sample.config.js/config.js/ | sed s/config/Docker/`
     cp $file  $newName

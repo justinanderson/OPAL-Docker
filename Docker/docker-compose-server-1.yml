@@ -24,7 +24,7 @@ services:
         links:
             - mongodb
         ports:
-            - 8080:8080
+            - 8080:80
         volumes:
             - ./opal.cache.config.js:/usr/app/config/opal.cache.config.js
 
@@ -35,9 +35,8 @@ services:
         links:
             - mongodb
         ports:
-            - 3001:3001
-        volumes:
-            - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
+            - 3001:80
+        command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
         image: opalservices/opal-interface:latest

@@ -1,7 +1,7 @@
 const {Constants}  =  require('eae-utils');
 
 module.exports = {
-    mongoURL: 'mongodb://mongodb/eae',
+    mongoURL: 'mongodb://mongodb/opal',
     port: 80,
     enableCors: true,
     swiftURL: 'http://swift:8080',
