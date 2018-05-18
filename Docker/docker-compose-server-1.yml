@@ -20,7 +20,7 @@ services:
     cache:
         image: opalservices/opal-cache:latest
         depends_on:
-            - mongodb
+            - mongodb-initialize
         links:
             - mongodb
         ports:
@@ -31,17 +31,19 @@ services:
     algoservice:
         image: opalservices/opal-algoservice:latest
         depends_on:
-            - mongodb
+            - mongodb-initialize
         links:
             - mongodb
         ports:
             - 3001:80
+        volumes:
+            - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
         command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
         image: opalservices/opal-interface:latest
         depends_on:
-            - mongodb
+            - mongodb-initialize
             - cache
             - algoservice
         links:
