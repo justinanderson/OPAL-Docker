@@ -28,7 +28,7 @@ services:
         image: opalservices/opal-compute:latest
         depends_on:
             - aggandprivacy
-            - timescaledb
+            - timescaledb-initialize
         links:
             - aggandprivacy
             - timescaledb
