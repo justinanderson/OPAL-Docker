@@ -11,10 +11,13 @@ adminPwd = sys.argv[2]
 
 client = MongoClient('mongodb://' + mongoURL + '/')
 
-adminUser = { "type" : "ADMIN",
-	      "username" : "admin",
-              "token" : adminPwd,
-              "created" : datetime.datetime.utcnow() 
+adminUser = {"type": "ADMIN",
+              "defaultAccessLevel": "antenna",
+              "authorizedAlgorithms": {
+              },
+              "username": "admin",
+              "token": "qwerty1234",
+              "created": datetime.datetime.utcnow()
              }
 
 client.opal.eae_users.insert_one(adminUser)
