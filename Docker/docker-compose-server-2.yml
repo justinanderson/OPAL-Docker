@@ -16,14 +16,6 @@ services:
         links:
             - timescaledb
 
-    algoservice:
-        image: opalservices/opal-algoservice:latest
-        ports:
-            - "3001:80"
-        command: sh -c 'npm start'
-        volumes:
-            - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
-
     aggandprivacy:
         image: opalservices/opal-privacy
         ports:
@@ -37,9 +29,11 @@ services:
         depends_on:
             - algoservice
             - aggandprivacy
+            - timescaledb
         links:
             - algoservice
             - aggandprivacy
+            - timescaledb
         command: sh -c 'sudo apparmor_init && cd /home/opal/app && npm start'
         privileged: true
         security_opt:
@@ -56,6 +50,6 @@ services:
         links:
             - compute
         ports:
-            - "80:80"
+            - "7001:80"
         volumes:
             - ./opal.scheduler.config.js:/usr/app/config/opal.scheduler.config.js
