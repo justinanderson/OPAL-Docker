@@ -20,8 +20,7 @@ services:
         image: opalservices/opal-algoservice:latest
         ports:
             - "3001:80"
-        command:
-            - npm start
+        command: sh -c 'npm start'
         volumes:
             - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
 
@@ -29,8 +28,7 @@ services:
         image: opalservices/opal-privacy
         ports:
             - "9001:80"
-        command:
-            - npm start
+        command: sh -c 'npm start'
         volumes:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
@@ -42,8 +40,10 @@ services:
         links:
             - algoservice
             - aggandprivacy
-        command:
-            - apparmor_init && npm start
+        command: sh -c 'sudo apparmor_init && cd /home/opal/app && npm start'
+        privileged: true
+        security_opt:
+            - apparmor:unconfined
         ports:
             - "8001:80"
         volumes:

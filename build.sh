@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cp ./Docker/daemon.json /etc/docker/daemon.json
+service docker restart
 rm -rf Docker/*.config.js
 
 for file in config/*.sample.config.js; do
