@@ -27,14 +27,12 @@ services:
     compute:
         image: opalservices/opal-compute:latest
         depends_on:
-            - algoservice
             - aggandprivacy
             - timescaledb
         links:
-            - algoservice
             - aggandprivacy
             - timescaledb
-        command: sh -c 'sudo apparmor_init && cd /home/opal/app && npm start'
+        command: sh -c 'sudo apparmor_init && sudo npm start'
         privileged: true
         security_opt:
             - apparmor:unconfined

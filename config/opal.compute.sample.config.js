@@ -2,7 +2,7 @@ const {Constants}  =  require('eae-utils');
 
 module.exports = {
     mongoURL: 'mongodb://localhost/opal',
-    postgresURL: 'postgres://postgres@timescaledb/opal',
+    timescaleURL: 'postgres://postgres@timescaledb/opal',
     port: 80,
     enableCors: true,
     computeType: [Constants.EAE_COMPUTE_TYPE_PYTHON2],
