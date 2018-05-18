@@ -32,7 +32,7 @@ services:
         links:
             - aggandprivacy
             - timescaledb
-        command: sh -c 'sudo apparmor_init && sudo npm start'
+        command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
             - apparmor:unconfined
