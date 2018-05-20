@@ -68,7 +68,5 @@ typings/
 *.iml
 
 package-lock.json
-Docker/eae.carrier.config.js
-Docker/eae.compute.config.js
-Docker/eae.interface.config.js
-Docker/eae.scheduler.config.js
+Docker/*.config.js
+
