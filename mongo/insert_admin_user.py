@@ -14,6 +14,7 @@ client = MongoClient('mongodb://' + mongoURL + '/')
 adminUser = {"type": "ADMIN",
               "defaultAccessLevel": "antenna",
               "authorizedAlgorithms": {
+                  "density": "antenna"
               },
               "username": "admin",
               "token": "qwerty1234",
