@@ -3,77 +3,96 @@ services:
     mongodb:
         image: mongo:latest
         environment:
-          - MONGO_DATA_DIR=/data/mongodb
-          - MONGO_LOG_DIR=/dev/null
-          - MONGODB_DBNAME=opal
+            - MONGO_DATA_DIR=/data/mongodb
+            - MONGO_LOG_DIR=/dev/null
+            - MONGODB_DBNAME=opal
         command: mongod --smallfiles --logpath=/dev/null # --quiet
         ports:
-          - 27017:27017
+            - 27017:27017
 
     mongodb-initialize:
-        image: aoehmich/eae-mongodb-initialize:latest
+        image: opalservices/opal-mongodb-initialize:latest
         depends_on:
-          - mongodb
+            - mongodb
         links:
-          - mongodb
+            - mongodb
 
-    swift:
-        image: bouncestorage/swift-aio
-        ports:
-          - 8080:8080
-
-    compute1:
-        image: aoehmich/eae-compute:latest
+    cache:
+        image: opalservices/opal-cache:latest
         depends_on:
-          - mongodb
-          - swift
+            - mongodb-initialize
         links:
-          - mongodb
-          - swift
+            - mongodb
         volumes:
-          - ./eae.compute.config.js:/usr/app/config/eae.compute.config.js
+            - ./opal.cache.config.js:/usr/app/config/opal.cache.config.js
 
-    compute2:
-        image: aoehmich/eae-compute:latest
+    algoservice:
+        image: opalservices/opal-algoservice:latest
         depends_on:
-          - mongodb
-          - swift
+            - mongodb-initialize
         links:
-          - mongodb
-          - swift
+            - mongodb
         volumes:
-          - ./eae.compute.config.js:/usr/app/config/eae.compute.config.js
-
-    scheduler:
-        image: aoehmich/eae-scheduler:latest
-        depends_on:
-          - compute1
-          - compute2
-        links:
-          - mongodb
-          - swift
-        volumes:
-          - ./eae.scheduler.config.js:/usr/app/config/eae.scheduler.config.js
-
-    carrier:
-        image: aoehmich/eae-carrier:latest
-        depends_on:
-          - scheduler
-        links:
-          - mongodb
-          - swift
-        ports:
-          - 3000:3000
-        volumes:
-          - ./eae.carrier.config.js:/usr/app/config/eae.carrier.config.js
+            - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
+        command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
-        image: aoehmich/eae-interface:latest
+        image: opalservices/opal-interface:latest
         depends_on:
-          - carrier
+            - mongodb-initialize
+            - cache
+            - algoservice
         links:
-          - mongodb
+            - mongodb
+            - cache
+            - algoservice
         ports:
-          - 80:80
+            - 80:80
         volumes:
-          - ./eae.interface.config.js:/usr/app/config/eae.interface.config.js
+            - ./opal.interface.config.js:/usr/app/config/opal.interface.config.js
+
+    timescaledb:
+        image: timescale/timescaledb:latest
+        volumes:
+            - /mnt/db/pgdata:/var/lib/postgresql/data
+
+    timescaledb-initialize:
+        build:
+            context: ..
+            dockerfile: ./timescaledb/Dockerfile
+        depends_on:
+            - timescaledb
+        links:
+            - timescaledb
+
+    aggandprivacy:
+        image: opalservices/opal-privacy
+        depends_on:
+            - algoservice
+        command: sh -c 'npm start'
+        volumes:
+            - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
+
+    compute:
+        image: opalservices/opal-compute:latest
+        depends_on:
+            - aggandprivacy
+            - timescaledb-initialize
+        links:
+            - aggandprivacy
+            - timescaledb
+        command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
+        privileged: true
+        security_opt:
+            - apparmor:unconfined
+        volumes:
+            - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
+
+    scheduler:
+        image: opalservices/opal-scheduler
+        depends_on:
+            - compute
+        links:
+            - compute
+        volumes:
+            - ./opal.scheduler.config.js:/usr/app/config/opal.scheduler.config.js
