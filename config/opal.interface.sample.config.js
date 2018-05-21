@@ -4,6 +4,6 @@ module.exports = {
     enableCors: true,
     cacheURL: 'http://cache:80',
     algoServiceURL: 'http://algoService:80',
-    algorithmsDirectory: 'algorithms',
-    auditDirectory: 'audit'
+    algorithmsDirectory: '/usr/app/algorithms',
+    auditDirectory: '/usr/app/audit'
 };
