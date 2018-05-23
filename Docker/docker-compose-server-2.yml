@@ -2,8 +2,6 @@ version: '3'
 services:
     timescaledb:
         image: timescale/timescaledb:latest
-        ports:
-            - "5432:5432"
         volumes:
             - /mnt/db/pgdata:/var/lib/postgresql/data
 
@@ -18,26 +16,18 @@ services:
 
     aggandprivacy:
         image: opalservices/opal-privacy
-        ports:
-            - "9001:80"
+        depends_on:
+            - algoservice
         command: sh -c 'npm start'
         volumes:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
         image: opalservices/opal-compute:latest
-        depends_on:
-            - aggandprivacy
-            - timescaledb-initialize
-        links:
-            - aggandprivacy
-            - timescaledb
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
             - apparmor:unconfined
-        ports:
-            - "8001:80"
         volumes:
             - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
 
@@ -47,7 +37,5 @@ services:
             - compute
         links:
             - compute
-        ports:
-            - "7001:80"
         volumes:
             - ./opal.scheduler.config.js:/usr/app/config/opal.scheduler.config.js

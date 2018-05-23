@@ -9,6 +9,8 @@ services:
         command: mongod --smallfiles --logpath=/dev/null # --quiet
         ports:
             - 27017:27017
+        volumes:
+            - /mnt/db/mongodata:/data/mongodb
 
     mongodb-initialize:
         image: opalservices/opal-mongodb-initialize:latest
@@ -34,6 +36,7 @@ services:
             - mongodb
         volumes:
             - ./opal.algoservice.config.js:/usr/app/config/opal.algoservice.config.js
+            - /mnt/db/algoservicedata:/usr/app/data
         command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
@@ -75,12 +78,6 @@ services:
 
     compute:
         image: opalservices/opal-compute:latest
-        depends_on:
-            - aggandprivacy
-            - timescaledb-initialize
-        links:
-            - aggandprivacy
-            - timescaledb
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:

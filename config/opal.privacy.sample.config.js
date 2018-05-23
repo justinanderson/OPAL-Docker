@@ -1,6 +1,6 @@
 
 module.exports = {
-    mongoURL: 'mongodb://localhost/opal',
+    mongoURL: 'mongodb://mongodb/opal',
     port: 80,
     enableCors: true,
 };
