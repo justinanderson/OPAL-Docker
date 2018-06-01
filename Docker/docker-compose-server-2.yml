@@ -1,7 +1,7 @@
 version: '3'
 services:
     timescaledb:
-        image: timescale/timescaledb:latest
+        image: timescale/timescaledb:latest@sha256:5d206a07b216ca62d1a40727ac5d92f5ef3a42ba7138854f06ada11572adb79a
         volumes:
             - /mnt/db/pgdata:/var/lib/postgresql/data
 
@@ -15,7 +15,7 @@ services:
             - timescaledb
 
     aggandprivacy:
-        image: opalservices/opal-privacy
+        image: opalservices/opal-privacy:latest@sha256:95364253b3b3f60c881cae5b4840b5ef3aabdcc32bb451506135cb6232e9a4e3
         depends_on:
             - algoservice
         command: sh -c 'npm start'
@@ -23,7 +23,7 @@ services:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
-        image: opalservices/opal-compute:latest
+        image: opalservices/opal-compute:latest@sha256:f4e2521e4dedd803fb526aaedd1de5214881fb03971e452ce5358e007780631c
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
@@ -32,7 +32,7 @@ services:
             - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
 
     scheduler:
-        image: opalservices/opal-scheduler
+        image: opalservices/opal-scheduler:latest@sha256:409fcd8a63e0f59b61a5bdf753fc1d9f6723dac56c5a5add08b791a97b7d061a
         depends_on:
             - compute
         links:
