@@ -29,7 +29,7 @@ services:
             - ./opal.cache.config.js:/usr/app/config/opal.cache.config.js
 
     algoservice:
-        image: opalservices/opal-algoservice:latest@sha256:948f8644b43b44550ad959fd07f08146169ff2f4d500ea4029356a9504930c26
+        image: opalservices/opal-algoservice:latest@sha256:ef796a2b562b409fc1419829372e3fddb61045e6a0011e462364d84bf7f312c1
         depends_on:
             - mongodb-initialize
         links:
