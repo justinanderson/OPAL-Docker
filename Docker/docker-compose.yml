@@ -77,7 +77,7 @@ services:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
-        image: opalservices/opal-compute:latest@sha256:f4e2521e4dedd803fb526aaedd1de5214881fb03971e452ce5358e007780631c
+        image: opalservices/opal-compute:latest@sha256:c9ee7c4c647ddc514f7c97829d6574384c9f5d329f45f49bbb5b81759816d135
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
