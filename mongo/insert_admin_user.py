@@ -12,12 +12,15 @@ adminPwd = sys.argv[2]
 client = MongoClient('mongodb://' + mongoURL + '/')
 
 adminUser = {"type": "ADMIN",
+             "isSuperAdmin": True,
              "defaultAccessLevel": "antenna",
              "authorizedAlgorithms": {
                  "density": "antenna"
              },
              "username": "admin",
              "token": "qwerty1234",
+             "quota": 10,
+             "currentQuota": 10,
              "created": datetime.datetime.utcnow()
              }
 
