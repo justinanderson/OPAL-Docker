@@ -20,7 +20,7 @@ services:
             - mongodb
 
     cache:
-        image: opalservices/opal-cache:latest@sha256:327dcfdc695895be0f2481d1bbd45ef18cc4110892070a61b157d53f46f78fdf
+        image: opalservices/opal-cache:latest@sha256:f898be156f7126a99c92fdd2dab9496ad42788a3f28d6d5dd5097fd5e98f40d7
         depends_on:
             - mongodb-initialize
         links:
