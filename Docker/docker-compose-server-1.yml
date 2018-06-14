@@ -40,7 +40,7 @@ services:
         command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
-        image: opalservices/opal-interface:latest@sha256:7b419e8137d22f8a00e3673cdd355afda262e9d2d5bf7009aafbb293f3327c99
+        image: opalservices/opal-interface:latest@sha256:74f4cb974d75bbd0fce6953da161b2f948e313e180e7a6141b5589b8b8ca0ec3
         depends_on:
             - mongodb-initialize
             - cache
