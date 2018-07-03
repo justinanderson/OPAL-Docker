@@ -9,5 +9,8 @@ module.exports = {
     opalAlgoServiceURL: 'http://algoservice:80',
     opalAggPrivServiceURL: 'http://aggandprivacy:80',
     opalalgoSandboxVenv: '/usr/venv/sandbox',
-    opalalgoSandboxUser: 'sandbox'
+    opalalgoSandboxUser: 'sandbox',
+    maxUsersPerFetch: 5000,
+    maxCores: 7,
+    randomSeed: 42
 };
