@@ -5,5 +5,6 @@ module.exports = {
     cacheURL: 'http://cache:80',
     algoServiceURL: 'http://algoservice:80',
     algorithmsDirectory: '/usr/app/algorithms',
-    auditDirectory: '/usr/app/audit'
+    auditDirectory: '/usr/app/audit',
+    quotasRefreshPeriod: 7
 };

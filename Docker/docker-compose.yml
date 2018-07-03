@@ -1,7 +1,7 @@
 version: '3'
 services:
     mongodb:
-        image: mongo:latest@sha256:89672f72dde6ec88618fcfa2fd11a45d147cbd7df97573c227ff8d80131c3c53
+        image: mongo:latest@sha256:3a09cd85fb4e76f1d5832f9ea1d4e7481f76e807389b7d8ea6ac4d4ba96f83e5
         environment:
             - MONGO_DATA_DIR=/data/mongodb
             - MONGO_LOG_DIR=/dev/null
@@ -13,14 +13,14 @@ services:
             - /mnt/db/mongodata:/data/mongodb
 
     mongodb-initialize:
-        image: opalservices/opal-mongodb-initialize:latest@sha256:897f23199dc4074f4c5e8d427372383d7b98e63f8a6b658dafa14e7610688e34
+        image: opalservices/opal-mongodb-initialize:latest@sha256:eea08158541868dcc716093c8a164c122aee3035261cb06a3ccbef09dfc03bac
         depends_on:
             - mongodb
         links:
             - mongodb
 
     cache:
-        image: opalservices/opal-cache:latest@sha256:a1c5bafb9e1edac769c0562e1b14e1cb30d81f24fac480a986fd676a9946c4fc
+        image: opalservices/opal-cache:latest@sha256:f898be156f7126a99c92fdd2dab9496ad42788a3f28d6d5dd5097fd5e98f40d7
         depends_on:
             - mongodb-initialize
         links:
@@ -29,7 +29,7 @@ services:
             - ./opal.cache.config.js:/usr/app/config/opal.cache.config.js
 
     algoservice:
-        image: opalservices/opal-algoservice:latest@sha256:948f8644b43b44550ad959fd07f08146169ff2f4d500ea4029356a9504930c26
+        image: opalservices/opal-algoservice:latest@sha256:ef796a2b562b409fc1419829372e3fddb61045e6a0011e462364d84bf7f312c1
         depends_on:
             - mongodb-initialize
         links:
@@ -40,7 +40,7 @@ services:
         command: sh -c './src/wait-for.sh mongodb:27017 -- npm start'
 
     interface:
-        image: opalservices/opal-interface:latest@sha256:7b419e8137d22f8a00e3673cdd355afda262e9d2d5bf7009aafbb293f3327c99
+        image: opalservices/opal-interface:latest@sha256:8020aa06541f8b4cdf87c1730b92553d67b334d0d3c16d9872a6cb198700b2ab
         depends_on:
             - mongodb-initialize
             - cache
@@ -69,7 +69,7 @@ services:
             - timescaledb
 
     aggandprivacy:
-        image: opalservices/opal-privacy:latest@sha256:95364253b3b3f60c881cae5b4840b5ef3aabdcc32bb451506135cb6232e9a4e3
+        image: opalservices/opal-privacy:latest@sha256:56d530cd995d3f23934c62a3d3c8a542199c2859dcf3e9934ee66029cc43b6c7
         depends_on:
             - algoservice
         command: sh -c 'npm start'
@@ -77,7 +77,7 @@ services:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
-        image: opalservices/opal-compute:latest@sha256:f4e2521e4dedd803fb526aaedd1de5214881fb03971e452ce5358e007780631c
+        image: opalservices/opal-compute:latest@sha256:c9ee7c4c647ddc514f7c97829d6574384c9f5d329f45f49bbb5b81759816d135
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
@@ -86,7 +86,7 @@ services:
             - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
 
     scheduler:
-        image: opalservices/opal-scheduler:latest@sha256:409fcd8a63e0f59b61a5bdf753fc1d9f6723dac56c5a5add08b791a97b7d061a
+        image: opalservices/opal-scheduler:latest@sha256:5c3f516913fa73d6915c093763e7ab9f25073711bbbb37dd1d41a4d9f17c83c6
         depends_on:
             - compute
         links:

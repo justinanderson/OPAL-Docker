@@ -15,7 +15,7 @@ services:
             - timescaledb
 
     aggandprivacy:
-        image: opalservices/opal-privacy:latest@sha256:95364253b3b3f60c881cae5b4840b5ef3aabdcc32bb451506135cb6232e9a4e3
+        image: opalservices/opal-privacy:latest@sha256:56d530cd995d3f23934c62a3d3c8a542199c2859dcf3e9934ee66029cc43b6c7
         depends_on:
             - algoservice
         command: sh -c 'npm start'
@@ -23,7 +23,7 @@ services:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
 
     compute:
-        image: opalservices/opal-compute:latest@sha256:f4e2521e4dedd803fb526aaedd1de5214881fb03971e452ce5358e007780631c
+        image: opalservices/opal-compute:latest@sha256:c9ee7c4c647ddc514f7c97829d6574384c9f5d329f45f49bbb5b81759816d135
         command: sh -c 'sudo apparmor_init && sleep 5 && sudo npm start'
         privileged: true
         security_opt:
@@ -32,7 +32,7 @@ services:
             - ./opal.compute.config.js:/home/opal/app/config/opal.compute.config.js
 
     scheduler:
-        image: opalservices/opal-scheduler:latest@sha256:409fcd8a63e0f59b61a5bdf753fc1d9f6723dac56c5a5add08b791a97b7d061a
+        image: opalservices/opal-scheduler:latest@sha256:5c3f516913fa73d6915c093763e7ab9f25073711bbbb37dd1d41a4d9f17c83c6
         depends_on:
             - compute
         links:
