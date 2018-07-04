@@ -12,5 +12,5 @@ module.exports = {
     opalalgoSandboxUser: 'sandbox',
     maxUsersPerFetch: 5000,
     maxCores: 7,
-    randomSeed: 42
+    randomSeed: 0.42 // should be between -1 and 1
 };
