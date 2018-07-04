@@ -13,7 +13,7 @@ services:
             - /mnt/db/mongodata:/data/mongodb
 
     mongodb-initialize:
-        image: opalservices/opal-mongodb-initialize:latest@sha256:eea08158541868dcc716093c8a164c122aee3035261cb06a3ccbef09dfc03bac
+        image: opalservices/opal-mongodb-initialize:latest@sha256:8b82364a6735105cc3feecaa85afc3a294df59334092f5e2e2175eb4aa32b57f
         depends_on:
             - mongodb
         links:
