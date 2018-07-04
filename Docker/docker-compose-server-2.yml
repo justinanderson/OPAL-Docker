@@ -1,7 +1,7 @@
 version: '3'
 services:
     timescaledb:
-        image: timescale/timescaledb:latest@sha256:5d206a07b216ca62d1a40727ac5d92f5ef3a42ba7138854f06ada11572adb79a
+        image: timescale/timescaledb:timescaledb:0.9.2-pg9.6
         volumes:
             - /mnt/db/pgdata:/var/lib/postgresql/data
 
