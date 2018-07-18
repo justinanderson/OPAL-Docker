@@ -69,7 +69,7 @@ services:
             - timescaledb
 
     aggandprivacy:
-        image: opalservices/opal-privacy:latest@sha256:4b638c304b66fdbfb81263fd2ca459e4713bc260818679d04bc9f16788cce219
+        image: opalservices/opal-privacy:latest@sha256:1eee59a977738eca62a0b25d94aa70a60b5cf4ea5f9f39e1c091fbbcf19d3803
         depends_on:
             - algoservice
         command: sh -c 'npm start'
