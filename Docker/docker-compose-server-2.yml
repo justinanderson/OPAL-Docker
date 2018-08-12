@@ -16,8 +16,6 @@ services:
 
     aggandprivacy:
         image: opalservices/opal-privacy:latest@sha256:56d530cd995d3f23934c62a3d3c8a542199c2859dcf3e9934ee66029cc43b6c7
-        depends_on:
-            - algoservice
         command: sh -c 'npm start'
         volumes:
             - ./opal.privacy.config.js:/usr/app/config/opal.privacy.config.js
