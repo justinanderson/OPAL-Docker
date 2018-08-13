@@ -11,14 +11,19 @@ for file in config/*.sample.config.js; do
     cp $file  $newName
 done
 
+echo "Setting up server $1"
+
+# create /mnt/db/pgdata for timescaledb data
+# create /mnt/db/mongodata for mongodb data for server 1
+
 cd Docker
 
 echo -e "Building the images\n"
 
-docker-compose -f docker-compose-server-1.yml -f docker-compose-server-2.yml build
+docker-compose -f docker-compose-server-$1.yml build
 
 echo -e "\nPulling the latest Docker images from DockerHub\n"
 
-docker-compose  -f docker-compose-server-1.yml -f docker-compose-server-2.yml pull
+docker-compose  -f docker-compose-server-$1.yml pull
 
 echo -e "\nPlease check the configuration files then start the OPAL Platform with 'bash start.sh'\n"
