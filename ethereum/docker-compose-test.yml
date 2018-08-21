@@ -1,0 +1,25 @@
+version: "2"
+
+# Runs a local instance of Ganache, a local Ethereum network with effectively
+# instant transactions and 10 funded (~100 ETH), passwordless accounts.
+#
+# The server will be reachable at http://localhost:8545/.
+# For a seed of 0, the account addresses are:
+#
+# 0xe092b1fa25df5786d151246e492eed3d15ea4daa
+# 0xc0d8f541ab8b71f20c10261818f2f401e8194049
+# 0xf1f8ef6b4d4ba31079e2263ec85c03fd5a0802bf
+# 0xc91579bb7972f76d595f8665bffaf92874c8084c
+# 0x6f03947036cba3279b07cd6ea5ca674ca51e52ba
+# 0x889735777f51c84272a7feb0d763280179a529a9
+# 0x2c46bcb6da3ae85da881edeed4ec2fe92670f90f
+# 0x6a71e87487c0ec01ecffd09a2042cb5ed507393e
+# 0x3e014e5c311a7d6f652ca4f8bb016f4338a44118
+# 0x75c4fb2e81a6d3420125f5145182f528d1699146
+
+services:
+  ganache:
+    image: "trufflesuite/ganache-cli:latest"
+    ports:
+      - "8545:8545"
+    command: ["--host=0.0.0.0", "--seed=0"]
